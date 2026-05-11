@@ -1,0 +1,4 @@
+/detection_dataset_split/
+/segmentation_dataset_split/
+yolov8n.pt
+yolo26n-seg.pt
