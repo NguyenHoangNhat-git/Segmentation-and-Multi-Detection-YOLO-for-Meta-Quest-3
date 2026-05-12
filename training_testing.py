@@ -130,7 +130,7 @@ def incremental_train(proj_root, increment=10, model_variant='yolo26n-seg.pt'):
             project=project_dir, # Must match the checkpoint's project
             name=run_name,       # Must match the checkpoint's name
             device=[0, 1],
-            batch=16
+            batch=32
         )
     else:
         # Round 1 logic (same as your current working code)
@@ -142,7 +142,7 @@ def incremental_train(proj_root, increment=10, model_variant='yolo26n-seg.pt'):
             project=project_dir,
             name=run_name,
             device=[0, 1],
-            batch=16,
+            batch=32,
             mask_ratio=1,
             overlap_mask=True,
             copy_paste=0.3
@@ -153,4 +153,4 @@ def incremental_train(proj_root, increment=10, model_variant='yolo26n-seg.pt'):
 # test_model('runs/detect/train/weights/best.pt', 'detection_dataset_split/test')
 
 # YOLO26 Nano Segmentation
-incremental_train('segmentation_dataset_split', increment=10, model_variant='yolo26n-seg.pt')
+incremental_train('segmentation_dataset_split', increment=90, model_variant='yolo26n-seg.pt')

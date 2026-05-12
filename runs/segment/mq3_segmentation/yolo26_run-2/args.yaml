@@ -3,10 +3,10 @@ mode: train
 model: runs/segment/mq3_segmentation/yolo26_run/weights/last.pt
 data: /users/stagiaire/NGUYENHoangNhat/Segmentation and Multi-Detection for Meta Quest
   3/segmentation_dataset_split/data.yaml
-epochs: 10
+epochs: 90
 time: null
 patience: 100
-batch: 16
+batch: 32
 imgsz: 640
 save: true
 save_period: -1
