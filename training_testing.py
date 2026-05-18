@@ -1,7 +1,7 @@
 from ultralytics import YOLO
 import os
 
-def train_model(model_variant, proj_root, epochs=100, imgsz=640, mode="detect"):
+def train_model(model_variant, proj_root, epochs=100, imgsz=640, mode="detect", run_name="yolov9t_run"):
     """
     Trains a YOLO model (Detection or Segmentation).
     model_variant: 'yolov8n.pt' or 'yolo26n-seg.pt'
@@ -36,7 +36,7 @@ def train_model(model_variant, proj_root, epochs=100, imgsz=640, mode="detect"):
             data=yaml_path,
             epochs=100,
             imgsz=640,
-            batch=16,
+            batch=32,
             device=[0, 1],      # Use 'cpu' if you don't have a GPU
             
             # --- Augmentation Hyperparameters ---
@@ -52,7 +52,8 @@ def train_model(model_variant, proj_root, epochs=100, imgsz=640, mode="detect"):
             fliplr=0.5,    # Image flip left-right (probability)
             mosaic=1.0,    # Image mosaic (probability)
             mixup=0.1,     # Image mixup (probability)
-            copy_paste=0.1 # Segment copy-paste (probability)
+            copy_paste=0.1, # Segment copy-paste (probability)
+            name=run_name,
         )
     elif mode == "segment":
         results = model.train(
@@ -138,7 +139,7 @@ def incremental_train(proj_root, increment=10, model_variant='yolo26n-seg.pt'):
         model = YOLO(model_variant)
         model.train(
             data=yaml_path,
-            epochs=increment, # Goal is 10
+            epochs=increment, 
             project=project_dir,
             name=run_name,
             device=[0, 1],
@@ -149,8 +150,9 @@ def incremental_train(proj_root, increment=10, model_variant='yolo26n-seg.pt'):
         )
 
 # YOLOv8 Nano
-# train_model('yolov8n.pt', 'detection_dataset_split')
+# train_model('yolov8n.pt', 'detection_dataset_split', run_name="yolov8n_run")
 # test_model('runs/detect/train/weights/best.pt', 'detection_dataset_split/test')
 
 # YOLO26 Nano Segmentation
-incremental_train('segmentation_dataset_split', increment=90, model_variant='yolo26n-seg.pt')
+# incremental_train('segmentation_dataset_split', increment=90, model_variant='yolo26n-seg.pt')
+test_model('runs/segment/mq3_segmentation/yolo26_run-2/weights/best.pt', 'segmentation_dataset_split/test')
