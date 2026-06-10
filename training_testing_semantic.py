@@ -40,9 +40,10 @@ def train_semantic(proj_root, epochs=100, imgsz=640, run_name="yolo26_semantic_r
         data=yaml_path,
         epochs=epochs,
         imgsz=imgsz,
-        batch=32,          
-        device=[0, 1],
+        batch=16,          
+        device=[0],
         name=run_name,
+        resume=False,
         task="semantic",   # Explicitly set the task to semantic
         
         # --- Optimal Augmentations for Segmentation ---
@@ -74,7 +75,12 @@ def test_semantic(weights_path, source_path):
 
 if __name__ == "__main__":
     # 1. Train the semantic model using your existing .txt polygon annotations
-    train_semantic(proj_root='segmentation_dataset_split', epochs=100)
+    train_semantic(proj_root='cropped_segmentation_dataset_split', epochs=100, run_name="yolo26_semantic_crop_run")
+    
+    # model = YOLO('runs/semantic/yolo26_semantic400_run/weights/last.pt')
+    # results = model.train(
+    #     resume=True, 
+    # )
     
     # 2. Test the performance of your best semantic weights
     # test_semantic('runs/semantic/yolo26_semantic_run/weights/best.pt', 'segmentation_dataset_split/test')
