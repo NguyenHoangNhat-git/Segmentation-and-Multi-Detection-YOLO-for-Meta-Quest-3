@@ -34,10 +34,10 @@ def train_model(model_variant, proj_root, epochs=100, imgsz=640, mode="detect", 
     if mode == "detect":
         results = model.train(
             data=yaml_path,
-            epochs=100,
-            imgsz=640,
-            batch=32,
-            device=[0, 1],      # Use 'cpu' if you don't have a GPU
+            epochs=epochs,
+            imgsz=imgsz,
+            batch=16,
+            device=[0],
             
             # --- Augmentation Hyperparameters ---
             hsv_h=0.015,   # Image HSV-Hue augmentation (fraction)
@@ -58,10 +58,10 @@ def train_model(model_variant, proj_root, epochs=100, imgsz=640, mode="detect", 
     elif mode == "segment":
         results = model.train(
             data=yaml_path,
-            epochs=100,
-            imgsz=640,
+            epochs=epochs,
+            imgsz=imgsz,
             batch=16,            # Start here, increase to 32 if VRAM allows
-            device=[0, 1],
+            device=[0],
             
             # --- Segmentation Specifics ---
             mask_ratio=1,        # Better mask resolution for precise grasping
@@ -128,13 +128,12 @@ def incremental_train(proj_root, increment=10, model_variant='yolo26n-seg.pt'):
             data=yaml_path,
             epochs=new_goal,
             resume=True,
-            project=project_dir, # Must match the checkpoint's project
-            name=run_name,       # Must match the checkpoint's name
+            project=project_dir, 
+            name=run_name,       
             device=[0, 1],
             batch=32
         )
     else:
-        # Round 1 logic (same as your current working code)
         print("--- Starting Fresh Round 1 ---")
         model = YOLO(model_variant)
         model.train(
@@ -150,9 +149,9 @@ def incremental_train(proj_root, increment=10, model_variant='yolo26n-seg.pt'):
         )
 
 # YOLOv8 Nano
-# train_model('yolov8n.pt', 'detection_dataset_split', run_name="yolov8n_run")
+train_model('yolov8n.pt', 'detection_dataset_split', run_name="yolov8n_crop_run", imgsz=1280, mode="detect")
 # test_model('runs/detect/train/weights/best.pt', 'detection_dataset_split/test')
 
 # YOLO26 Nano Segmentation
 # incremental_train('segmentation_dataset_split', increment=90, model_variant='yolo26n-seg.pt')
-test_model('runs/segment/mq3_segmentation/yolo26_run-2/weights/best.pt', 'segmentation_dataset_split/test')
+# test_model('runs/segment/mq3_segmentation/yolo26_run/weights/best.pt', 'segmentation_dataset_split/test')

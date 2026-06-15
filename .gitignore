@@ -2,3 +2,7 @@
 /segmentation_dataset_split/
 yolov8n.pt
 yolo26n-seg.pt
+yolo26n-sem.pt
+nohup.out
+cropped_detection_dataset_split/
+cropped_segmentation_dataset_split/
