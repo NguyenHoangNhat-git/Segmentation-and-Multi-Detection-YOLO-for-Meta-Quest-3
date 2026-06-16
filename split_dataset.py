@@ -58,7 +58,7 @@ def split_dataset(src_root, dst_root, train_size=0.7, val_size=0.15, test_size=0
 # final_dir_seg = 'segmentation_dataset_split'
 # split_dataset(source_dir_seg, final_dir_seg)
 
-source_dir_detect = 'grasping-in-the-wild.detection/train' 
+source_dir_detect = 'grasping-in-the-wild.segmentation/train' 
 final_dir_detect = 'segmentation_dataset_split'
 
 split_dataset(source_dir_detect, final_dir_detect)

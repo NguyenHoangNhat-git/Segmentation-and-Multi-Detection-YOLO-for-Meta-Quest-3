@@ -55,7 +55,7 @@ def convert_and_migrate(src_root, dst_root):
     print(f"Success! Detection dataset created at: {dst_root}")
 
 # Run the script
-source = 'grasping-in-the-wild.segmentation/train'
-destination = 'grasping-in-the-wild.detection/train'
+source = 'segmentation_dataset/train'
+destination = 'detection_dataset/train'
 
 convert_and_migrate(source, destination)
