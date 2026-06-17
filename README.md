@@ -1,0 +1,1 @@
+This repo contains the training and testing script for the [Meta Quest Segmentation Pipeline](https://github.com/NguyenHoangNhat-git/Segmentation-Pipeline-on-Meta-Quest-3.git)
